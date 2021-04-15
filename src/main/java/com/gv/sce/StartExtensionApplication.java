@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StartchromeextensionApplication {
+public class StartExtensionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StartchromeextensionApplication.class, args);
+		SpringApplication.run(StartExtensionApplication.class, args);
 	}
 
 }
