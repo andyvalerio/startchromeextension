@@ -41,7 +41,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
             <scope>provided</scope>
         </dependency>
         
@@ -51,11 +50,16 @@
             <version>1.5.2</version>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.5.2</version>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <type>jar</type>
         </dependency>
-        
+        <dependency>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-zip</artifactId>
+            <version>1.14</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,6 +68,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 
