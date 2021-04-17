@@ -1,11 +1,13 @@
 package com.gv.sce.controller;
 
+import com.gv.sce.extension.ExtensionCreator;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,24 +24,18 @@ import org.zeroturnaround.zip.ZipUtil;
  *
  * @author giuse
  */
+@RequiredArgsConstructor
 @RestController
 @Slf4j
 public class StartExtensionController {
+    
+    private final ExtensionCreator extensionCreator;
 
     @RequestMapping(path = "/start", method = RequestMethod.GET)
     public ResponseEntity<Resource> start(String name, String description) throws IOException {
-        // TODO create JSON files based on parameters
-        JSONObject jsonManifest = new JSONObject();
-	jsonManifest.put("name", name);
-	jsonManifest.put("description", description);
-	jsonManifest.put("version", "1.0");
-	jsonManifest.put("manifest_version", 3);
-	Path folderPath = Files.createTempDirectory("extension");
-	File manifest = new File(folderPath.toString() + File.separator + "manifest.json");
-	try (FileWriter fileWriter = new FileWriter(manifest)) {
-	    fileWriter.write(jsonManifest.toJSONString());
-	    fileWriter.flush();
-	}
+	
+	Path folderPath = extensionCreator.createExtension(name, description);
+	
 	// TODO zip into a single archive
 	File zipFile = new File(folderPath.toString() + File.separator + "extension.zip");
 	ZipUtil.pack(folderPath.toFile(), zipFile);
