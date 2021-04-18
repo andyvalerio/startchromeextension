@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### UI Code ###
+ui/chrome-extension-initializer/.cache
+ui/chrome-extension-initializer/node_modules
+ui/chrome-extension-initializer/public
