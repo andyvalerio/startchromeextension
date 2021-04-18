@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.FileAttribute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zeroturnaround.zip.ZipUtil;
 
@@ -32,15 +34,17 @@ public class StartExtensionController {
     private final ExtensionCreator extensionCreator;
 
     @RequestMapping(path = "/start", method = RequestMethod.GET)
-    public ResponseEntity<Resource> start(String name, String description) throws IOException {
+    public ResponseEntity<Resource> start(
+	    @RequestParam(defaultValue = "My new Chrome extension") String name, 
+	    @RequestParam(defaultValue = "Think carefully about a good description") String description) throws IOException {
 	
 	Path folderPath = extensionCreator.createExtension(name, description);
 	
-	// TODO zip into a single archive
-	File zipFile = new File(folderPath.toString() + File.separator + "extension.zip");
-	ZipUtil.pack(folderPath.toFile(), zipFile);
+	File tempZipFile = Files.createTempFile("extension", "zip").toFile();
+	ZipUtil.pack(folderPath.toFile(), tempZipFile);
+	Path destinationPath = Files.move(tempZipFile.toPath(), Paths.get(folderPath.toString() + File.separator + "extension.zip"));
 	
-        final byte[] allBytes = Files.readAllBytes(zipFile.toPath());
+        final byte[] allBytes = Files.readAllBytes(destinationPath);
         ByteArrayResource resource = new ByteArrayResource(allBytes);
         HttpHeaders httpHeaders = new HttpHeaders();
 	httpHeaders.add("Content-Disposition", "attachment; filename=\"extension.zip\"");
