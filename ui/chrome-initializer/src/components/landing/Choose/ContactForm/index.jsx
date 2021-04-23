@@ -1,53 +1,49 @@
 import React from 'react';
 import axios from 'axios';
 import { Formik, Form, FastField, ErrorMessage } from 'formik';
-import Recaptcha from 'react-google-recaptcha';
 import * as Yup from 'yup';
 import { Button, Input } from 'components/common';
+import { saveAs } from 'file-saver';
 import { Error, Center, InputField } from './styles';
 
 export default () => (
   <Formik
     initialValues={{
       name: '',
-      email: '',
-      message: '',
-      recaptcha: '',
+      description: '',
       success: false,
     }}
     validationSchema={Yup.object().shape({
-      name: Yup.string().required('Full name field is required'),
-      email: Yup.string()
-        .email('Invalid email')
-        .required('Email field is required'),
-      message: Yup.string().required('Message field is required'),
-      recaptcha: Yup.string().required('Robots are not welcome yet!'),
+      name: Yup.string().required('Give a name to your extension'),
+      description: Yup.string().required('Description field is required'),
     })}
-    onSubmit={async ({ name, email, message }, { setSubmitting, resetForm, setFieldValue }) => {
+    onSubmit={async ({ name, description }, { setSubmitting, resetForm, setFieldValue }) => {
       try {
-        await axios({
+        const response = await axios({
           method: 'POST',
           url: `${process.env.GATSBY_PORTFOLIO_FORMIK_ENDPOINT}`,
           headers: {
             'Content-Type': 'application/json',
           },
+          responseType: 'blob',
           data: JSON.stringify({
             name,
-            email,
-            message,
+            description,
           }),
         });
+        saveAs(response.data, 'extension.zip');
         setSubmitting(false);
         setFieldValue('success', true);
-        setTimeout(() => resetForm(), 6000);
+        document.location.hash = '#generate';
+        // setTimeout(() => resetForm(), 6000);
       } catch (err) {
         setSubmitting(false);
         setFieldValue('success', false);
-				alert('Something went wrong, please try again!') // eslint-disable-line
+				alert(err) // eslint-disable-line
       }
     }}
   >
-    {({ values, touched, errors, setFieldValue, isSubmitting }) => (
+    {({ touched, errors, isSubmitting }) => (
       <Form>
         <InputField>
           <Input
@@ -56,59 +52,27 @@ export default () => (
             name="name"
             component="input"
             aria-label="name"
-            placeholder="Full name*"
+            placeholder="Extension name"
             error={touched.name && errors.name}
           />
           <ErrorMessage component={Error} name="name" />
         </InputField>
         <InputField>
           <Input
-            id="email"
-            aria-label="email"
+            id="description"
+            aria-label="description"
             component="input"
             as={FastField}
-            type="email"
-            name="email"
-            placeholder="Email*"
-            error={touched.email && errors.email}
-          />
-          <ErrorMessage component={Error} name="email" />
-        </InputField>
-        <InputField>
-          <Input
-            as={FastField}
-            component="textarea"
-            aria-label="message"
-            id="message"
-            rows="8"
             type="text"
-            name="message"
-            placeholder="Message*"
-            error={touched.message && errors.message}
+            name="description"
+            placeholder="Description"
+            error={touched.description && errors.description}
           />
-          <ErrorMessage component={Error} name="message" />
+          <ErrorMessage component={Error} name="description" />
         </InputField>
-        {values.name && values.email && values.message && (
-          <InputField>
-            <FastField
-              component={Recaptcha}
-              sitekey={process.env.GATSBY_PORTFOLIO_RECAPTCHA_KEY}
-              name="recaptcha"
-              onChange={value => setFieldValue('recaptcha', value)}
-            />
-            <ErrorMessage component={Error} name="recaptcha" />
-          </InputField>
-        )}
-        {values.success && (
-          <InputField>
-            <Center>
-              <h4>Your message has been successfully sent, I will get back to you ASAP!</h4>
-            </Center>
-          </InputField>
-        )}
         <Center>
           <Button secondary type="submit" disabled={isSubmitting}>
-            Submit
+            Generate my new Chrome extension
           </Button>
         </Center>
       </Form>
