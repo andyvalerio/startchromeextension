@@ -1,3 +1,2 @@
-export * from './Intro';
+export * from './Choose';
 export * from './Skills';
-export * from './Contact';

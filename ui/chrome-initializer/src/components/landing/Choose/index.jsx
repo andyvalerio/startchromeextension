@@ -1,27 +1,24 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
-import { Container, Button } from 'components/common';
+import { Container } from 'components/common';
 import dev from 'assets/illustrations/dev.svg';
 import { Wrapper, IntroWrapper, Details, Thumbnail } from './styles';
+import ContactForm from './ContactForm';
 
-export const Intro = () => {
+export const Choose = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <Wrapper>
       <Header />
-      <IntroWrapper as={Container}>
+      <IntroWrapper as={Container} id="choose">
         <Details theme={theme}>
-          <h1>Hi There!</h1>
-          <h4>I’m John and I’m a JAMStack engineer!</h4>
-          <Button as={AnchorLink} href="#contact">
-            Hire me
-          </Button>
+          <h4>Choose a few settings for your project</h4>
+          <ContactForm />
         </Details>
         <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a JAMStack engineer!" />
+          <img src={dev} alt="Choose a few settings for your project" />
         </Thumbnail>
       </IntroWrapper>
     </Wrapper>
