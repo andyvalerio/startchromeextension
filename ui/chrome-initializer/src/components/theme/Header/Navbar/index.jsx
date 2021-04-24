@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <Wrapper as={Container}>
       <Brand as={Link} to="/" theme={theme}>
-        Start a new Chrome Extension in 1 click
+        Start developing a new Chrome Extension
       </Brand>
       <NavbarLinks desktop />
     </Wrapper>

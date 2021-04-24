@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Container, Button } from 'components/common';
-import dev from 'assets/illustrations/skills.svg';
+import { Container } from 'components/common';
+import dev from 'assets/illustrations/howto.gif';
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const Skills = () => {
@@ -12,17 +11,17 @@ export const Skills = () => {
     <Wrapper id="generate">
       <SkillsWrapper as={Container}>
         <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a Backend & Devops engineer!" />
+          <img src={dev} alt="How to install your new Chrome extension" />
         </Thumbnail>
         <Details theme={theme}>
-          <h1>More about me</h1>
+          <h1>Install the new extension</h1>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry’s standard dummy.
+            <ul>
+              <li>Open chrome://extensions</li>
+              <li>Enable Developer mode, top-right corner</li>
+              <li>Drag-and-drop the extension.zip file there</li>
+            </ul>
           </p>
-          <Button as={AnchorLink} href="#contact">
-            Hire me
-          </Button>
         </Details>
       </SkillsWrapper>
     </Wrapper>

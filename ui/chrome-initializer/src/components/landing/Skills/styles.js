@@ -52,7 +52,7 @@ export const Details = styled.div`
 `;
 
 export const Thumbnail = styled.div`
-  flex: 1;
+  flex: 2;
 
   @media (max-width: 960px) {
     width: 100%;

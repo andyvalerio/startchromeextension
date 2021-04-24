@@ -33,6 +33,7 @@ build/
 .vscode/
 
 ### UI Code ###
-ui/chrome-extension-initializer/.cache
-ui/chrome-extension-initializer/node_modules
-ui/chrome-extension-initializer/public
+ui/chrome-initializer/.cache
+ui/chrome-initializer/.vscode
+ui/chrome-initializer/node_modules
+ui/chrome-initializer/public

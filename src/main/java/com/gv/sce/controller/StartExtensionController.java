@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,11 +34,11 @@ public class StartExtensionController {
     
     private final ExtensionCreator extensionCreator;
 
-    @RequestMapping(path = "/start", method = RequestMethod.GET)
+    @CrossOrigin
+    @RequestMapping(path = "/start", method = RequestMethod.POST)
     public ResponseEntity<Resource> start(
 	    @RequestParam(defaultValue = "My new Chrome extension") String name, 
 	    @RequestParam(defaultValue = "Think carefully about a good description") String description) throws IOException {
-	
 	Path folderPath = extensionCreator.createExtension(name, description);
 	
 	File tempZipFile = Files.createTempFile("extension", "zip").toFile();

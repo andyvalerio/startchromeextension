@@ -9,13 +9,12 @@ const NavbarLinks = ({ desktop }) => {
 
   return (
     <Wrapper desktop={desktop} theme={theme}>
-      <AnchorLink href="#choose">Choose</AnchorLink>
-      <AnchorLink href="#generate">Generate</AnchorLink>
+      <AnchorLink href="#choose">Generate</AnchorLink>
+      <AnchorLink href="#generate">Install</AnchorLink>
       <AnchorLink href="#contact">Get in touch</AnchorLink>
       <ToggleTheme />
     </Wrapper>
   )
-
 };
 
 export default NavbarLinks;
