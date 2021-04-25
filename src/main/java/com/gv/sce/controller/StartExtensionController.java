@@ -2,15 +2,12 @@ package com.gv.sce.controller;
 
 import com.gv.sce.extension.ExtensionCreator;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +36,7 @@ public class StartExtensionController {
     public ResponseEntity<Resource> start(
 	    @RequestParam(defaultValue = "My new Chrome extension") String name, 
 	    @RequestParam(defaultValue = "Think carefully about a good description") String description) throws IOException {
+	log.warn("Name: " + name);
 	Path folderPath = extensionCreator.createExtension(name, description);
 	
 	File tempZipFile = Files.createTempFile("extension", "zip").toFile();
