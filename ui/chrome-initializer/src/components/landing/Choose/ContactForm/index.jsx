@@ -24,7 +24,7 @@ export default () => (
         formData.append('description', description);
         const response = await axios({
           method: 'POST',
-          url: `${process.env.BACKEND_ENDPOINT}`,
+          url: `${process.env.GATSBY_BACKEND_ENDPOINT}`,
           responseType: 'blob',
           data: formData,
         });
