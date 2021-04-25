@@ -14,7 +14,7 @@ export const Choose = () => {
       <Header />
       <IntroWrapper as={Container} id="choose">
         <Details theme={theme}>
-          <h1>Generate a new Chrome extension in 1 click</h1>
+          <h1>Generate a new Chrome extension</h1>
           <p>Choose a few settings for your project</p>
           <ContactForm />
         </Details>

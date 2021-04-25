@@ -19,17 +19,14 @@ export default () => (
     })}
     onSubmit={async ({ name, description }, { setSubmitting, resetForm, setFieldValue }) => {
       try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
         const response = await axios({
           method: 'POST',
-          url: `${process.env.GATSBY_PORTFOLIO_FORMIK_ENDPOINT}`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          url: `${process.env.BACKEND_ENDPOINT}`,
           responseType: 'blob',
-          data: JSON.stringify({
-            name,
-            description,
-          }),
+          data: formData,
         });
         saveAs(response.data, 'extension.zip');
         setSubmitting(false);
