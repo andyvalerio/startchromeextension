@@ -37,3 +37,4 @@ ui/chrome-initializer/.cache
 ui/chrome-initializer/.vscode
 ui/chrome-initializer/node_modules
 ui/chrome-initializer/public
+/nbproject/

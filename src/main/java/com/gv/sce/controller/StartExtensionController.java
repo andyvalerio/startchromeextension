@@ -35,9 +35,10 @@ public class StartExtensionController {
     @RequestMapping(path = "/start", method = RequestMethod.POST)
     public ResponseEntity<Resource> start(
 	    @RequestParam(defaultValue = "My new Chrome extension") String name, 
-	    @RequestParam(defaultValue = "Think carefully about a good description") String description) throws IOException {
+	    @RequestParam(defaultValue = "Think carefully about a good description") String description, 
+	    @RequestParam(defaultValue = "true") boolean popup) throws IOException {
 	log.warn("Name: " + name);
-	Path folderPath = extensionCreator.createExtension(name, description);
+	Path folderPath = extensionCreator.createExtension(name, description, popup);
 	
 	File tempZipFile = Files.createTempFile("extension", "zip").toFile();
 	ZipUtil.pack(folderPath.toFile(), tempZipFile);
