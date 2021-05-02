@@ -6,8 +6,6 @@
 package com.gv.sce.extension;
 
 import com.gv.sce.config.ExtensionConfiguration;
-import java.nio.file.Path;
-import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,12 +48,13 @@ public class ExtensionCreatorTest {
 	String name = "My Extension";
 	String description = "My Description";
 	boolean popup = false;
+	boolean service = false;
 	ExtensionConfiguration extensionConfiguration = new ExtensionConfiguration();
 	extensionConfiguration.setInitialVersion("1.0");
 	extensionConfiguration.setManifestVersion(3);
 	ExtensionCreator instance = new ExtensionCreator(extensionConfiguration);
 	String expResult = "{\"name\":\"My Extension\",\"manifest_version\":3,\"description\":\"My Description\",\"version\":\"1.0\"}";
-	String result = instance.jsonManifest(name, description, popup).toJSONString();
+	String result = instance.jsonManifest(name, description, popup, service).toJSONString();
 	assertEquals(expResult, result);
     }
     
@@ -65,13 +64,15 @@ public class ExtensionCreatorTest {
 	String name = "My Extension";
 	String description = "My Description";
 	boolean popup = true;
+	boolean service = true;
 	ExtensionConfiguration extensionConfiguration = new ExtensionConfiguration();
 	extensionConfiguration.setInitialVersion("1.0");
 	extensionConfiguration.setManifestVersion(3);
 	ExtensionCreator instance = new ExtensionCreator(extensionConfiguration);
-	String expResult = "{\"browser_action\":{\"default_popup\":\"popup.html\"},\"name\":\"My Extension\",\"manifest_version\":3,\"description\""
-		+ ":\"My Description\",\"version\":\"1.0\"}";
-	String result = instance.jsonManifest(name, description, popup).toJSONString();
+	String expResult = "{\"permissions\":[\"scripting\"],\"background\":{\"service_worker\":\"worker.js\"},\"name\":\"My Extension\",\"manifest_version\":3"
+		+ ",\"host_permissions\":[\"http:\\/\\/*\\/*\",\"https:\\/\\/*\\/*\"],\"description\":\"My Description\",\"action\":{\"default_popup\":\""
+		+ "popup.html\"},\"version\":\"1.0\"}";
+	String result = instance.jsonManifest(name, description, popup, service).toJSONString();
 	System.out.println(result);
 	assertEquals(expResult, result);
     }
