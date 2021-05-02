@@ -24,13 +24,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: config.googleAnalyticsID,
-        head: true,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-favicon',
       options: {
         logo: './static/favicon/favicon-512.png',
@@ -61,5 +54,18 @@ module.exports = {
       },
     },
     'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: ['G-VZPDBZHPG2'],
+        gtagConfig: {
+          anonymize_ip: true,
+          cookie_expires: 0,
+        },
+        pluginConfig: {
+          head: false,
+        },
+      },
+    },
   ],
 };
